@@ -1008,7 +1008,7 @@ function flattenConfigPets(merged) {
 const FONT_PRESETS = [
 	{
 		id: "candy",
-		stack: "\"ShangshouSoftCandy\",\"Yuanti SC\",\"YouYuan\",\"幼圆\",\"Comic Sans MS\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif"
+		stack: "\"Marmelad\",\"ShangshouSoftCandy\",\"Yuanti SC\",\"YouYuan\",\"幼圆\",\"Comic Sans MS\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif"
 	},
 	{
 		id: "yahei",
@@ -2183,7 +2183,7 @@ const CHAT_CSS = [
 	".dsh-pet-chat{position:fixed;z-index:2147483001;width:160px;max-width:80vw;",
 	"background:rgba(255,255,255,.98);border:1px solid rgba(0,0,0,.12);border-radius:10px;",
 	"box-shadow:0 10px 32px rgba(0,0,0,.22);color:#2b2b2b;font-size:14px;line-height:1.5;",
-	"font-family:var(--dsh-pet-font-family,'ShangshouSoftCandy','Yuanti SC','YouYuan','幼圆','Comic Sans MS','PingFang SC','Microsoft YaHei',sans-serif);",
+	"font-family:var(--dsh-pet-font-family,'Marmelad','ShangshouSoftCandy','Yuanti SC','YouYuan','幼圆','Comic Sans MS','PingFang SC','Microsoft YaHei',sans-serif);",
 	"user-select:none}",
 	".dsh-pet-chat *{box-sizing:border-box}",
 	".dsh-pet-chat-input{display:block;width:100%;border:none;outline:none;background:transparent;",
@@ -3128,7 +3128,7 @@ const SCORE_POPUP_CSS = [
 	".dsh-pet-score{position:fixed;z-index:2147483002;min-width:120px;text-align:center;",
 	"background:rgba(255,255,255,.97);border:1px solid rgba(255,179,0,.35);border-radius:12px;",
 	"box-shadow:0 10px 32px rgba(0,0,0,.22);padding:8px 16px 9px;user-select:none;pointer-events:auto;",
-	"font-family:var(--dsh-pet-font-family,'ShangshouSoftCandy','Yuanti SC','YouYuan','幼圆','Comic Sans MS','PingFang SC','Microsoft YaHei',sans-serif);}",
+	"font-family:var(--dsh-pet-font-family,'Marmelad','ShangshouSoftCandy','Yuanti SC','YouYuan','幼圆','Comic Sans MS','PingFang SC','Microsoft YaHei',sans-serif);}",
 	".dsh-pet-score.is-in{animation:dshPetScorePop .28s ease}",
 	".dsh-pet-score-val{font-size:22px;line-height:1.25;font-weight:700;color:#ff8f00;font-variant-numeric:tabular-nums}",
 	".dsh-pet-score-sub{font-size:11px;line-height:1.4;color:rgba(43,43,43,.6);margin-top:2px;white-space:nowrap}",
@@ -4225,7 +4225,7 @@ const TODO_CSS = [
 	".dsh-pet-todo{--t:calc(var(--f)*" + TODO_FONT_SCALE + ");display:flex;flex-direction:column;",
 	"box-sizing:border-box;border-radius:inherit;overflow:hidden;color:#2b2b2b;font-size:var(--t);",
 	"line-height:1.5;user-select:none;",
-	"font-family:var(--dsh-pet-font-family,'ShangshouSoftCandy','Yuanti SC','YouYuan','幼圆','Comic Sans MS','PingFang SC','Microsoft YaHei',sans-serif);",
+	"font-family:var(--dsh-pet-font-family,'Marmelad','ShangshouSoftCandy','Yuanti SC','YouYuan','幼圆','Comic Sans MS','PingFang SC','Microsoft YaHei',sans-serif);",
 	"}",
 	".dsh-pet-todo *{box-sizing:border-box}",
 	".dsh-pet-todo-head{display:flex;align-items:center;gap:.615em;padding:.769em .923em .615em}",
@@ -4463,7 +4463,7 @@ const TOOLTIP_CSS = [
 	"border-radius:calc(var(--dsh-pet-size,var(--pet-size,462px))*0.016);",
 	"background:rgba(255,255,255,.96);color:#1f1f1f;",
 	"border:1px solid rgba(0,0,0,.12);",
-	"font-family:var(--dsh-pet-font-family,\"ShangshouSoftCandy\",\"Yuanti SC\",\"YouYuan\",\"幼圆\",\"Comic Sans MS\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif);",
+	"font-family:var(--dsh-pet-font-family,\"Marmelad\",\"ShangshouSoftCandy\",\"Yuanti SC\",\"YouYuan\",\"幼圆\",\"Comic Sans MS\",\"PingFang SC\",\"Microsoft YaHei\",sans-serif);",
 	"font-size:var(--dsh-pet-font-tip,calc(var(--dsh-pet-size,var(--pet-size,462px))*0.026));line-height:1.4;",
 	"white-space:nowrap;overflow:hidden;text-overflow:ellipsis;",
 	"box-shadow:0 calc(var(--dsh-pet-size,var(--pet-size,462px))*0.004) calc(var(--dsh-pet-size,var(--pet-size,462px))*0.013) rgba(0,0,0,.18);",

@@ -109,6 +109,30 @@ node tools/translate-memes.mjs --only "Шокер.png"
 Дешёвый Nano Banana (`google/gemini-2.5-flash-image`, 2,90 ₽) длинные надписи не тянет —
 на нём остаются китайские иероглифы.
 
+## Шрифты
+
+Встроенный «мармеладный» шрифт апстрима (`assets/fonts/上首软糖体.ttf`,
+`ShangshouSoftCandy`) содержит только CJK — кириллицы в нём нет, поэтому русский
+текст в пузыре и подсказках падал в системный шрифт.
+
+В форк добавлен **Marmelad** (`assets/fonts/Marmelad-Regular.ttf`, OFL 1.1,
+Copyright 2016 The Marmelad Project Authors): латиница + кириллица, мягкий
+округлый рисунок, близкий к мармеладному. Он стоит **первым** в стеке `candy`:
+
+```
+"Marmelad","ShangshouSoftCandy","Yuanti SC","YouYuan","幼圆",…
+```
+
+Латиница и кириллица берутся из Marmelad, иероглифы (если включён zh-язык) —
+из оставшегося следом `ShangshouSoftCandy`. Правила `@font-face` добавлены и в
+веб-клиент (`lib/client.js`), и в настольный рендерер
+(`runtime/electron-helper/renderer.js`); файл раздаётся хостом по
+`/dsh-pet-7340/font/Marmelad-Regular.ttf`.
+
+Повторно применить после обновления апстрима: `node tools/embed-font.mjs`
+(идемпотентно; лицензии — `assets/fonts/Marmelad-LICENSE.txt`,
+`assets/fonts/Marmelad-COPYRIGHT.txt`).
+
 ## Обновление апстрима
 
 Апстрим — отдельный remote, изменённая у нас только ветка `ru`:
@@ -119,6 +143,7 @@ git fetch upstream
 # посмотреть, что поменялось в апстриме, перенести вручную и перевести новые строки:
 node tools/apply.mjs               # бандлы lib/*.js и assets/config.jsonc
 node tools/translate-ui.mjs        # служебные ошибки/логи в lib/* и runtime/electron-helper
+node tools/embed-font.mjs          # Marmelad первым в шрифтовой стек + @font-face
 node tools/rename-assets.mjs       # имена анимаций и мемов (идемпотентно)
 node tools/translate-desktop-labels.mjs  # подписи настольного оверлея
 ```
@@ -152,4 +177,8 @@ tools/    — скрипты перевода для будущих обновл
 - Ассеты (анимации, изображения, шрифты): лицензия автора апстрима — **некоммерческое
   использование**, при публикации переделок обязательна ссылка на
   <https://github.com/PC2005-cloud/dsh-pet>.
+- Шрифт **Marmelad** (`assets/fonts/Marmelad-Regular.ttf`) — отдельная лицензия
+  **SIL Open Font License 1.1** (Copyright 2016 The Marmelad Project Authors),
+  текст в `assets/fonts/Marmelad-LICENSE.txt`; под некоммерческое ограничение
+  апстрима он не попадает.
 - Перевод на русский и переименование ассетов: anderson-m3x.

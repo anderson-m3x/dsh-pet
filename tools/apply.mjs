@@ -877,6 +877,8 @@ const raw = {
       '`[dsh-pet] обновление баланса начато (${manual ? "вручную" : "по расписанию"})`'],
     ['`[dsh-pet] 余额刷新失败 provider=${result.provider} reason=${result.reason}`',
       '`[dsh-pet] обновление баланса не удалось provider=${result.provider} reason=${result.reason}`'],
+    ['`[dsh-pet] 余额刷新成功 provider=${result.provider}（${result.shape}）`',
+      '`[dsh-pet] баланс обновлён provider=${result.provider} (${result.shape})`'],
     ['`[dsh-pet] 碎碎念生成成功 pet=${petId}，${result.text.length} 字`',
       '`[dsh-pet] бормотание сгенерировано pet=${petId}, ${result.text.length} симв.`'],
     ['`，配图=${result.image}`', '`, картинка=${result.image}`'],

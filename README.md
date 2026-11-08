@@ -41,6 +41,24 @@ pnpm add "git+ssh://git@github.com/anderson-m3x/dsh-pet.git#ru"
 Если плагин `dsh-pet` уже стоял из npm — сначала удалите его из профиля, затем поставьте
 форк: имена пакета и entry-id совпадают, поэтому две копии одновременно не уживутся.
 
+## Баланс Polza.ai
+
+В апстриме баланс умеют только четыре провайдера (DeepSeek official/account, commandcode,
+opencode-go), поэтому при чате через `polza` запрос отвечал `reason=unsupported`.
+В форке добавлен встроенный провайдер `polza`:
+
+- `GET https://polza.ai/api/v2/balance`, ключ — credential ref `POLZA_API_KEY`;
+- в пузыре питомца — баланс кошелька в рублях (`Баланс ₽…`), процент израсходованного
+  считается от «баланс + потрачено за всё время»;
+- `available` (доступно с учётом лимита ключа) в пузыре не показывается — смотрите консоль
+  Polza; при желании правится в `tools/patch-polza-balance.mjs`.
+
+Патч идемпотентен и накатывается на пересобранный `lib/index.js`:
+
+```powershell
+node tools/patch-polza-balance.mjs
+```
+
 ## Обновление апстрима
 
 Апстрим — отдельный remote, изменённая у нас только ветка `ru`:

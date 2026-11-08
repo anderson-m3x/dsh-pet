@@ -11,7 +11,7 @@ Object.assign(PetSprite.prototype, {
   initPlayback(pet) {
     // 动画池与权重由拍平层按条目注入（renderer 的 S.flattenConfigPets），条目缺 animations 就是配置不全：
     // 明确报错交给 boot 的红条与 5s 重试，绝不回落到没有定义的全局（那只会变成一句 ReferenceError）。
-    if (!pet.animations) throw new Error('宠物缺少 animations 段：' + String(pet.id ?? ''));
+    if (!pet.animations) throw new Error('у питомца нет раздела animations: ' + String(pet.id ?? ''));
     this.animations = pet.animations;
     this.weights = pet.animationWeights;
     this.front = 0; // 0 = A, 1 = B
@@ -35,7 +35,7 @@ Object.assign(PetSprite.prototype, {
     // 上一次按下的时刻（0 = 还没记过）：弹弓的判定依据是两次按下之间隔了多久，与松手时间无关。
     this.lastPressAt = 0;
     this._interactive = null; // 已上报的可交互状态（setInteractive 去重用）
-    this._inputBusy = null; // 已上报的"正在用输入"状态（syncInputBusy 去重用）
+    this._inputBusy = null; // 已上报的"использую ввод"状态（syncInputBusy 去重用）
     // 拖拽抛掷物理（纯计算在 shared）：弹簧跟随包围盒左上角，松手按指针轨迹估速 → 抛掷
     this.dragTrail = []; // 指针轨迹采样（screenX/Y + performance.now()，初速估算用）
     this.dragTarget = null;
@@ -130,7 +130,7 @@ Object.assign(PetSprite.prototype, {
 
   /** 建 DOM 并把首帧位置落到窗口；布局数值全部来自上面算好的 geometry。 */
   buildDom() {
-    // DOM：sprite 摆在窗口内 (winOffset.x, winOffset.y)；宠物"位置"= sprite 位置，窗口随余量外扩。
+    // DOM：sprite 摆在窗口内 (winOffset.x, winOffset.y)；宠物"позиция"= sprite 位置，窗口随余量外扩。
     // 初值等于余量，窗口被系统钳回工作区后由 fitWindow 逐帧改成更大的偏移。
     this.el = document.createElement('div');
     this.el.className = 'pet-sprite';

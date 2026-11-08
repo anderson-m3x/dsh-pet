@@ -56,7 +56,7 @@ Object.assign(PetSprite.prototype, {
     if (this.todoOpen) {
       this.bubble.classList.remove('is-whisper', 'is-clickable', 'is-expanded', S.MEME_BUBBLE_CLASS);
       this.bubble.classList.add('is-on');
-      window.__dshPetDebug.lastBubbleTitle = '待办事项';
+      window.__dshPetDebug.lastBubbleTitle = 'Задачи';
       this.syncInputBusy();
       return;
     }

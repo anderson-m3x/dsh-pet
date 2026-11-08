@@ -160,7 +160,7 @@ function registerIpc({ ipcMain, petWindows, shell, openTarget, petRoute }) {
     const url = payload && typeof payload === 'object' ? String(payload.url || '') : '';
     if (!/^https?:[/][/]/.test(url)) return;
     if (openTarget === 'desktop') {
-      // 协议未注册（绿色版 / 注册表被清）时回落成打开站点，至少不是"点了没反应"
+      // 协议未注册（绿色版 / 注册表被清）时回落成打开站点，至少不是"нажал, а реакции нет"
       focusDesktopApp().catch((error) => {
         console.error('[dsh-pet-desktop-helper] open dsh:// failed, falling back to site:', error);
         openSite(url);
@@ -191,7 +191,7 @@ function registerIpc({ ipcMain, petWindows, shell, openTarget, petRoute }) {
       height: Math.max(1, Math.min(4096, Math.round(display.size.height * scale))),
     };
     const sources = await desktopCapturer.getSources({ types: ['screen'], thumbnailSize: size });
-    // display_id 是字符串；取不到对应屏时退回第一块，总比"点了没反应"好
+    // display_id 是字符串；取不到对应屏时退回第一块，总比"нажал, а реакции нет"好
     const source = sources.find((item) => String(item.display_id) === String(display.id)) ?? sources[0];
     if (!source || source.thumbnail.isEmpty()) return null;
     const thumbnail = source.thumbnail;

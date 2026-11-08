@@ -712,7 +712,7 @@ function resetInText(iso) {
 function windowsPercent(v) {
 	return Math.max(v.rolling ?? 0, v.weekly ?? 0, v.monthly ?? 0);
 }
-/** 把 resetInText 的三种返回翻成一句提示：空串 = 时间未知，'已重置' = 已经过点，其余 = 倒计时。 */
+/** Переводит три варианта возврата resetInText в подсказку: пустая строка = время неизвестно, 'сброшено' = уже прошло, иначе = обратный отсчёт. */
 function resetPhrase(reset) {
 	if (reset === "") return "время сброса неизвестно";
 	return reset === "сброшено" ? reset : reset + " до сброса";

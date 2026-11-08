@@ -47,14 +47,14 @@ Object.assign(PetSprite.prototype, {
     const loadGuard = (why) => {
       if (!this.pending || this.pending.gen !== gen) return;
       this.pending = null;
-      console.warn('[dsh-pet] 素材加载失败 pet=' + this.pet.id + ' anim=' + next + '：' + why + '（已释放本次切换）');
+      console.warn('[dsh-pet] не удалось загрузить материал pet=' + this.pet.id + ' anim=' + next + '：' + why + ' (этот переключатель освобождён)');
       // 播放回执：这一段没能播起来 → 如实回 failed（而不是让调用方干等到 timeout）
       if (playbackId) {
         if (this.playback === playbackId) this.playback = null;
         this.reportPlayback(playbackId, 'failed', why === 'video error' ? 'decode-error' : 'asset-load');
       }
     };
-    const loadTimer = window.setTimeout(() => loadGuard('10s 超时'), 10000);
+    const loadTimer = window.setTimeout(() => loadGuard('таймаут 10 с'), 10000);
     el.onerror = () => {
       window.clearTimeout(loadTimer);
       loadGuard('video error');
@@ -157,10 +157,10 @@ Object.assign(PetSprite.prototype, {
       this.workTimer = null;
       this.workOn = false;
       this.renderBubble();
-      console.log(stamp + ' 占用锁生效：冻结（随机链停 + 当前动画暂停 + 任务状态气泡收起）');
+      console.log(stamp + ' блокировка занятости активна: заморозка (случайная цепочка остановлена + текущая анимация на паузе + пузырь статуса задачи скрыт)');
       return;
     }
-    console.log(stamp + ' 占用锁解除：恢复');
+    console.log(stamp + ' блокировка занятости снята: восстановление');
     // 解冻：睡姿优先接回（冻结只暂停、没换源，续播即可），其次非终态工作状态回档位循环，
     // 否则回 idle 一次，播完由 handleEnded 接回随机链。
     if (this.resumeSleepAnim()) return;
@@ -210,13 +210,13 @@ Object.assign(PetSprite.prototype, {
         this.sleeping = false;
         this.sleepSet = null;
         this.sleepPhase = null;
-        console.log(stamp + ' 入睡被打断：不播起来');
+        console.log(stamp + ' засыпание прервано: не проигрываю подъём');
         return;
       }
       this.sleepPhase = 'end';
       this.stopMove();
       this.playOnce(this.sleepSet.end);
-      console.log(stamp + ' 醒来：播 ' + this.sleepSet.end + ' 一遍');
+      console.log(stamp + ' пробуждение: проигрываю ' + this.sleepSet.end + ' один раз');
       return;
     }
     // 已在睡（含正在播「起来」的过渡段）：重复叶子不重放，保持原套
@@ -231,7 +231,7 @@ Object.assign(PetSprite.prototype, {
     this.workOn = false;
     this.renderBubble();
     this.playOnce(state.start);
-    console.log(stamp + ' 进睡：' + state.start + ' → ' + state.loop);
+    console.log(stamp + ' сон: ' + state.start + ' → ' + state.loop);
   },
 
   /**
@@ -243,7 +243,7 @@ Object.assign(PetSprite.prototype, {
   postSleepAction(action) {
     const route = action === 'wake' ? '/wake' : '/sleep';
     S.postAction(BASE + route + '?pet=' + encodeURIComponent(this.pet.id)).then((ok) => {
-      if (!ok) console.error('[dsh-pet] ' + (action === 'wake' ? '叫醒' : '进睡') + '请求未成功 pet=' + this.pet.id);
+      if (!ok) console.error('[dsh-pet] ' + (action === 'wake' ? 'разбудить' : 'сон') + 'запрос не удался pet=' + this.pet.id);
     });
   },
 
@@ -338,7 +338,7 @@ Object.assign(PetSprite.prototype, {
             new Date().toTimeString().slice(0, 8) +
             ' pet=' +
             this.pet.id +
-            ' workStatus 档内轮换: ' +
+            ' ротация в ступени workStatus: ' +
             this.anim +
             ' -> ' +
             nextWork,
@@ -382,7 +382,7 @@ Object.assign(PetSprite.prototype, {
     if (slot === undefined) return false;
     const name = S.pickSlot(slot, this.anim); // 避开当前正播动画（避免连续重复）
     console.log(
-      '[dsh-pet] ' + new Date().toTimeString().slice(0, 8) + ' pet=' + this.pet.id + ' 恢复工作状态动画: ' + name,
+      '[dsh-pet] ' + new Date().toTimeString().slice(0, 8) + ' pet=' + this.pet.id + ' восстановление анимации рабочего состояния: ' + name,
     );
     const rotating = Array.isArray(slot) && slot.length > 1;
     if (rotating)

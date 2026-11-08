@@ -21,7 +21,7 @@ Object.assign(PetSprite.prototype, {
       }
       this.applyFreeze(false);
       S.postAction(BASE + '/lock/release?pet=' + encodeURIComponent(this.pet.id), { force: true }).then((ok) => {
-        if (!ok) console.warn('[dsh-pet] 用户接管上报未送达 pet=' + this.pet.id);
+        if (!ok) console.warn('[dsh-pet] отчёт о перехвате пользователем не доставлен pet=' + this.pet.id);
       });
     }
     // 抓取速度日志：stopThrow 之前读，否则飞行速度就没了；静止时记录 0
@@ -351,7 +351,7 @@ Object.assign(PetSprite.prototype, {
     const px = wx - this.winOffset.x;
     const py = wy - this.winOffset.y;
     const inBody = px >= r.x && px <= r.x + r.w && py >= r.y && py <= r.y + r.h;
-    // 快捷键与拖拽都只在"光标在身体上"时生效，与提示/穿透同源，避免另一套判定
+    // 快捷键与拖拽都只在"курсор на теле"时生效，与提示/穿透同源，避免另一套判定
     this.hoverBody = inBody;
     // 光标存视口坐标（窗口原点 + 窗口内坐标）：窗口随宠物移动时贴光标不会漂。必须在 setTip 之前
     // 更新——setTip 变显隐时会立刻渲染一次，晚一步就会用上一次的光标摆位。

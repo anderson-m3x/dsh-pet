@@ -64,7 +64,7 @@ function runSmokeCheck({ app, windows, windowIgnore, setPointerFallbackPaused })
             // 独立不变量：把宠物先拖到工作区内的固定安全点（600,300），松手后窗口位置必须原地不动。
             // 拖拽抛掷物理（弹簧跟手+甩抛）下：指针长距跳跃后弹簧需要 ~0.3s 收敛，
             // 松手前停留超过 RELEASE_STALE_MS(150ms) 判为「温柔放下」（估速 null，不抛掷）——
-            // 所以先等弹簧到位、再停留才松手，只测"释放瞬间是否位移"。
+            // 所以先等弹簧到位、再停留才松手，只测"есть ли смещение в момент отпускания"。
             var d = window.__dshPetDebug;
             var hit = document.querySelector('.pet-hit');
             if (!d || !d.dragPos || !hit) return null;

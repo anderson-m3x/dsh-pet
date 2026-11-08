@@ -118,9 +118,16 @@ git remote add upstream https://github.com/PC2005-cloud/dsh-pet.git
 git fetch upstream
 # посмотреть, что поменялось в апстриме, перенести вручную и перевести новые строки:
 node tools/apply.mjs               # бандлы lib/*.js и assets/config.jsonc
+node tools/translate-ui.mjs        # служебные ошибки/логи в lib/* и runtime/electron-helper
 node tools/rename-assets.mjs       # имена анимаций и мемов (идемпотентно)
 node tools/translate-desktop-labels.mjs  # подписи настольного оверлея
 ```
+
+`translate-ui.mjs` дополняет `apply.mjs`: переводит сообщения об ошибках и логи
+(в т.ч. строки провайдеров баланса, Electron-хелпера и веб-клиента) и намеренно
+не трогает словари локализации (`src/client/**/locales/*`), имена шрифтов
+(`幼圆`, `上首软糖体`) и протокольные маркеры `[动作:…]` / `[图:…]` — их перевод
+сломал бы разбор ответов модели.
 
 Скрипты идемпотентны, принимают `--root <путь к пакету>` и `--dry`, копии оригиналов
 кладут в `backup/`.

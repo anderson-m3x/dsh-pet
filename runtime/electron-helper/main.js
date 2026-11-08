@@ -13,10 +13,10 @@ try {
   electronApi = require('electron');
 } catch (error) {
   process.stderr.write(
-    '[dsh-pet helper] 启动失败：本进程被以「纯 Node 模式」拉起（ELECTRON_RUN_AS_NODE=' +
+    '[dsh-pet helper] сбой запуска: процесс запущен в «режиме чистого Node» (ELECTRON_RUN_AS_NODE=' +
       JSON.stringify(process.env.ELECTRON_RUN_AS_NODE ?? null) +
-      '）。该变量必须在 spawn 前删除（见 src/host/helper-process.ts 的 helperSpawnEnv），' +
-      '运行期再删无效，设成空串会让 Electron 直接 abort。原始错误：' +
+      '). Эту переменную нужно удалить до spawn (см. helperSpawnEnv в src/host/helper-process.ts),' +
+      'удаление во время работы не помогает, пустая строка заставит Electron сразу abort. Исходная ошибка: ' +
       (error instanceof Error ? error.message.split('\n')[0] : String(error)) +
       '\n',
   );
@@ -91,7 +91,7 @@ let hostGone = false;
 function exitForDeadHost() {
   if (hostGone) return;
   hostGone = true;
-  app.exit(0); // 宿主消失是"环境要求我退"，不是自身崩溃，退出码 0
+  app.exit(0); // 宿主消失是"окружение требует выйти"，不是自身崩溃，退出码 0
 }
 
 // ① 管道守卫必须赶在任何一次写之前装上（probePrimaryScale 失败就会往 stderr 写）
@@ -112,10 +112,10 @@ const userDataDecision = resolveUserDataDir({
 });
 if (userDataDecision.fallback) {
   app.setPath('userData', userDataDecision.dir);
-  console.error('[dsh-pet-desktop-helper] userData 不可写，回退到', userDataDecision.dir);
+  console.error('[dsh-pet-desktop-helper] userData недоступен для записи, откатываюсь к', userDataDecision.dir);
 } else if (userDataDecision.error) {
   console.error(
-    '[dsh-pet-desktop-helper] userData 回退失败:',
+    '[dsh-pet-desktop-helper] откат userData не удался:',
     String(userDataDecision.error.message || userDataDecision.error),
   );
 }

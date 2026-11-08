@@ -19,6 +19,7 @@
 | Меню настольного питомца, трей, ошибки окна, подсказки клавиш, заголовок | `runtime/electron-helper/{sprite/menu.js,main/tray.js,renderer.js,sprite.js,index.html}` |
 | Персона, тексты сна, статусы работы, описания мемов, имя питомца | `assets/config.jsonc` |
 | 114 анимаций и 27 мемов переименованы в русские имена (файлы + ключи конфига) | `assets/webm`, `assets/memes` |
+| Надписи на 26 мемах переведены на русский (Nano Banana 2); «Милота» без текста — оригинал | `assets/memes` |
 
 Страницы настроек и панели чата берут язык из DSH: русский словарь в плагине уже был,
 поэтому при русском интерфейсе DSH они русские.
@@ -88,6 +89,25 @@ node tools/patch-polza-balance.mjs
 Формат пакета — как у любого pet pack: файл `pet/<имя>-config.json` с `pets[]`,
 `animations`, `memes`, `whisperPrompt`; ассеты ищутся в `pet/<имя>-animation/`
 (подпапка `webm/`) и `pet/<имя>-memes/`. Когда арт будет — подключу и проверю.
+
+## Мемы
+
+Надписи на мемах (`assets/memes/*.png`) переведены на русский через Polza.ai,
+модель **Nano Banana 2** (`google/gemini-3.1-flash-image-preview`): 4,80 ₽ за картинку 1K,
+все 26 мемов с текстом — ≈ 125 ₽ (плюс несколько повторных прогонов). Мем «Милота»
+без надписей оставлен оригиналом.
+
+Перезапуск после обновления апстрима:
+
+```powershell
+node tools/translate-memes.mjs                 # все мемы
+node tools/translate-memes.mjs --only "Шокер.png"
+```
+
+Скрипт берёт ключ `POLZA_API_KEY` из `~/.dsh/.credentials.yaml` (или из окружения),
+оригиналы складывает в `tools/backup/memes-orig/`, результат ужимает в 384×384 PNG.
+Дешёвый Nano Banana (`google/gemini-2.5-flash-image`, 2,90 ₽) длинные надписи не тянет —
+на нём остаются китайские иероглифы.
 
 ## Обновление апстрима
 

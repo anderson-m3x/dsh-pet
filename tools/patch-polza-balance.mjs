@@ -51,9 +51,9 @@ const polza = {
 \t\t\tshape: "money",
 \t\t\tdata: { wallets: [{
 \t\t\t\tcurrency: "RUB",
-\t\t\t\ttotal: amount,
+\t\t\t\ttotal: total.toFixed(2),
 \t\t\t\tgranted: "0",
-\t\t\t\ttoppedUp: amount,
+\t\t\t\ttoppedUp: total.toFixed(2),
 \t\t\t\t...full === void 0 ? {} : { fullBalance: full }
 \t\t\t}] }
 \t\t};

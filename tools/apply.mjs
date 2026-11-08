@@ -879,6 +879,8 @@ const raw = {
       '`[dsh-pet] обновление баланса не удалось provider=${result.provider} reason=${result.reason}`'],
     ['`[dsh-pet] 余额刷新成功 provider=${result.provider}（${result.shape}）`',
       '`[dsh-pet] баланс обновлён provider=${result.provider} (${result.shape})`'],
+    ['`[dsh-pet] 无桌面宠物（display 均为 web/none）且无需保留托盘（tray=${getTrayOn()}），已跳过桌面 Helper 启动`',
+      '`[dsh-pet] нет настольных питомцев (display у всех web/none), трей не нужен (tray=${getTrayOn()}) — запуск настольного хелпера пропущен`'],
     ['`[dsh-pet] 碎碎念生成成功 pet=${petId}，${result.text.length} 字`',
       '`[dsh-pet] бормотание сгенерировано pet=${petId}, ${result.text.length} симв.`'],
     ['`，配图=${result.image}`', '`, картинка=${result.image}`'],

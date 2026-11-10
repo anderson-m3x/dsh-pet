@@ -62,6 +62,7 @@
     "lib",
     "assets/webm",
     "runtime/electron-helper",
+    "runtime/voice",
     "assets/fonts",
     "assets/pic",
     "assets/memes",

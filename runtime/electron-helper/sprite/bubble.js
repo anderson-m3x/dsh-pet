@@ -49,6 +49,29 @@ Object.assign(PetSprite.prototype, {
     this.tip.classList.toggle('is-on', this.tipOn);
     window.__dshPetDebug.tooltipOn = this.tipOn;
   },
+  /** Прижимает пузырь к краям окна: у края экрана баллон и мем не обрезаются.
+   *  Питомца двигать не нужно — сдвигается сам пузырь, хвостик остаётся над питомцем
+   *  (::after компенсирует --bub-dx). Пересчёт — после рендера и загрузки картинки. */
+  clampBubble() {
+    const el = this.bubble;
+    if (!el) return;
+    el.style.setProperty('--bub-dx', '0px');
+    el.style.setProperty('--bub-dy', '0px');
+    if (!el.classList.contains('is-on')) return;
+    const pad = 6;
+    const vw = document.documentElement.clientWidth || window.innerWidth;
+    const vh = document.documentElement.clientHeight || window.innerHeight;
+    const r = el.getBoundingClientRect();
+    let dx = 0;
+    let dy = 0;
+    if (r.left < pad) dx = pad - r.left;
+    else if (r.right > vw - pad) dx = vw - pad - r.right;
+    if (r.top < pad) dy = pad - r.top;
+    else if (r.bottom > vh - pad) dy = vh - pad - r.bottom;
+    if (dx !== 0) el.style.setProperty('--bub-dx', Math.round(dx) + 'px');
+    if (dy !== 0) el.style.setProperty('--bub-dy', Math.round(dy) + 'px');
+  },
+
   renderBubble() {
     // 待办面板占气泡槽且优先级最高：它是用户主动打开的窗口，其余气泡一律让位。
     // 面板是外部塞进来的 DOM，重建 innerHTML 会把它自己抹掉，所以这一段只补显隐与让位。
@@ -108,7 +131,11 @@ Object.assign(PetSprite.prototype, {
       this.bubble.appendChild(line);
     } else if (slot === 'whisper') {
       // 配图（shared 生成的 <img> + 共用样式）：先看图再读话
-      if (whisperImg) this.bubble.appendChild(whisperImg);
+      if (whisperImg) {
+        // картинка задаёт ширину пузыря — после загрузки пересчитываем прижатие к краям
+        whisperImg.addEventListener('load', () => this.clampBubble());
+        this.bubble.appendChild(whisperImg);
+      }
       const line = document.createElement('div');
       line.className = 'pet-bub-row';
       line.textContent = this.whisperView[0]?.text ?? '';
@@ -230,6 +257,8 @@ Object.assign(PetSprite.prototype, {
     }
     this.bubble.classList.add('is-on');
     window.__dshPetDebug.lastBubbleTitle = this.bubble.textContent.slice(0, 60);
+    // пузырь у края экрана — прижимаем внутрь окна
+    this.clampBubble();
     // 气泡内容/尺寸变了 → 重报控件矩形并同步 busy 标记。这里是所有显隐与换内容的汇聚点。
     this.syncInputBusy();
   },

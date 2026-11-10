@@ -75,15 +75,17 @@
          字体经 renderer 注入上首软糖体 @font-face */
       .pet-bubble {
         position: absolute;
-        left: 50%;
+        /* --bub-dx/--bub-dy выставляет clampBubble(): пузырь прижимается к краям окна,
+           чтобы у края экрана баллон и мем не обрезались; хвостик компенсирует сдвиг */
+        left: calc(50% + var(--bub-dx, 0px));
         transform: translateX(-50%);
-        bottom: calc(100% - var(--pet-size, 462px) * 0.108);
+        bottom: calc(100% - var(--pet-size, 462px) * 0.108 - var(--bub-dy, 0px));
         width: max-content;
         /* 钉死 content-box：本文件全局设了 border-box，那会让 min/max-width 把内边距也算进去，
            内容可用宽度被悄悄缩掉一圈（表现为「明明还有空位却折行」）。与浏览器 bubble.ts 同一口径 */
         box-sizing: content-box;
         min-width: calc(var(--f) * 5.7143);
-        max-width: min(calc(var(--f) * 16), 100%);
+        max-width: min(calc(var(--f) * 16), 100%, calc(100vw - 12px));
         padding: calc(var(--f) * 0.4835) calc(var(--f) * 0.6593);
         border-radius: calc(var(--f) * 0.7692);
         background: rgba(255, 255, 255, 0.92);
@@ -122,7 +124,7 @@
       .pet-bubble::after {
         content: '';
         position: absolute;
-        left: 50%;
+        left: calc(50% - var(--bub-dx, 0px));
         bottom: calc(var(--f) * -0.3736);
         transform: translateX(-50%);
         border: calc(var(--f) * 0.3736) solid transparent;
